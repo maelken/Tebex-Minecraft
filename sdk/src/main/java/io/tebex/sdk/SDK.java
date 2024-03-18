@@ -1,6 +1,7 @@
 package io.tebex.sdk;
 
 import com.google.gson.*;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import io.tebex.sdk.exception.ServerNotFoundException;
 import io.tebex.sdk.exception.ServerNotSetupException;
 import io.tebex.sdk.obj.Package;
@@ -66,9 +67,9 @@ public class SDK {
         }
 
         return request("/information").withSecretKey(secretKey).sendAsync().thenApply(response -> {
-            if(response.code() == 404 || response.code() == 403) {
+            if (response.code() == 404 || response.code() == 403) {
                 throw new CompletionException(new ServerNotFoundException());
-            } else if(response.code() != 200) {
+            } else if (response.code() != 200) {
                 throw new CompletionException(new IOException("Unexpected status code (" + response.code() + ")"));
             }
 
@@ -109,9 +110,9 @@ public class SDK {
         }
 
         return request("/queue").withSecretKey(secretKey).sendAsync().thenApply(response -> {
-            if(response.code() == 404) {
+            if (response.code() == 404) {
                 throw new CompletionException(new ServerNotFoundException());
-            } else if(response.code() != 200) {
+            } else if (response.code() != 200) {
                 throw new CompletionException(new IOException("Unexpected status code (" + response.code() + ")"));
             }
 
@@ -121,7 +122,7 @@ public class SDK {
                 JsonArray server = jsonObject.get("players").getAsJsonArray();
 
                 List<QueuedPlayer> players = new ArrayList<>();
-                for(JsonElement element : server) {
+                for (JsonElement element : server) {
                     JsonObject asJsonObject = element.getAsJsonObject();
                     players.add(QueuedPlayer.fromJson(asJsonObject));
                 }
@@ -147,9 +148,9 @@ public class SDK {
         }
 
         return request("/queue/offline-commands").withSecretKey(secretKey).sendAsync().thenApply(response -> {
-            if(response.code() == 404) {
+            if (response.code() == 404) {
                 throw new CompletionException(new ServerNotFoundException());
-            } else if(response.code() != 200) {
+            } else if (response.code() != 200) {
                 throw new CompletionException(new IOException("Unexpected status code (" + response.code() + ")"));
             }
 
@@ -159,7 +160,7 @@ public class SDK {
                 JsonArray commands = jsonObject.get("commands").getAsJsonArray();
 
                 List<QueuedCommand> offlineCommands = new ArrayList<>();
-                for(JsonElement element : commands) {
+                for (JsonElement element : commands) {
                     JsonObject commandJson = element.getAsJsonObject();
                     JsonObject conditions = commandJson.get("conditions").getAsJsonObject();
 
@@ -200,9 +201,9 @@ public class SDK {
         }
 
         return request("/queue/online-commands/" + player.getId()).withSecretKey(secretKey).sendAsync().thenApply(response -> {
-            if(response.code() == 404) {
+            if (response.code() == 404) {
                 throw new CompletionException(new ServerNotFoundException());
-            } else if(response.code() != 200) {
+            } else if (response.code() != 200) {
                 throw new CompletionException(new IOException("Unexpected status code (" + response.code() + ")"));
             }
 
@@ -211,7 +212,7 @@ public class SDK {
                 JsonArray commands = jsonObject.getAsJsonArray("commands");
 
                 List<QueuedCommand> queuedCommands = new ArrayList<>();
-                for(JsonElement element : commands) {
+                for (JsonElement element : commands) {
                     JsonObject commandJson = element.getAsJsonObject();
                     JsonObject conditions = commandJson.getAsJsonObject("conditions");
 
@@ -257,9 +258,9 @@ public class SDK {
         body.add("ids", idArray);
 
         return request("/queue").withBody(GSON.toJson(body), "DELETE").withSecretKey(secretKey).sendAsync().thenApply(response -> {
-            if(response.code() == 404) {
+            if (response.code() == 404) {
                 throw new CompletionException(new ServerNotFoundException());
-            } else if(response.code() != 204) {
+            } else if (response.code() != 204) {
                 throw new CompletionException(new IOException("Unexpected status code (" + response.code() + ")"));
             }
 
@@ -280,9 +281,9 @@ public class SDK {
         }
 
         return request("/community_goals").withSecretKey(secretKey).sendAsync().thenApply(response -> {
-            if(response.code() == 404) {
+            if (response.code() == 404) {
                 throw new CompletionException(new ServerNotFoundException());
-            } else if(response.code() != 200) {
+            } else if (response.code() != 200) {
                 throw new CompletionException(new IOException("Unexpected status code (" + response.code() + ")"));
             }
 
@@ -310,9 +311,9 @@ public class SDK {
         }
 
         return request("/community_goals/" + communityGoalId).withSecretKey(secretKey).sendAsync().thenApply(response -> {
-            if(response.code() == 404) {
+            if (response.code() == 404) {
                 throw new CompletionException(new ServerNotFoundException());
-            } else if(response.code() != 200) {
+            } else if (response.code() != 200) {
                 throw new CompletionException(new IOException("Unexpected status code (" + response.code() + ")"));
             }
 
@@ -345,9 +346,9 @@ public class SDK {
         payload.addProperty("username", username);
 
         return request("/checkout").withBody(GSON.toJson(payload)).withSecretKey(secretKey).sendAsync().thenApply(response -> {
-            if(response.code() == 404) {
+            if (response.code() == 404) {
                 throw new CompletionException(new ServerNotFoundException());
-            } else if(response.code() != 201) {
+            } else if (response.code() != 201) {
                 throw new CompletionException(new IOException("Unexpected status code (" + response.code() + ")"));
             }
 
@@ -373,9 +374,9 @@ public class SDK {
         }
 
         return request("/coupons").withSecretKey(secretKey).sendAsync().thenApply(response -> {
-            if(response.code() == 404) {
+            if (response.code() == 404) {
                 throw new CompletionException(new ServerNotFoundException());
-            } else if(response.code() != 200) {
+            } else if (response.code() != 200) {
                 throw new CompletionException(new IOException("Unexpected status code (" + response.code() + ")"));
             }
 
@@ -407,9 +408,9 @@ public class SDK {
         }
 
         return request("/coupons/" + id).withSecretKey(secretKey).sendAsync().thenApply(response -> {
-            if(response.code() == 404) {
+            if (response.code() == 404) {
                 throw new CompletionException(new ServerNotFoundException());
-            } else if(response.code() != 200) {
+            } else if (response.code() != 200) {
                 throw new CompletionException(new IOException("Unexpected status code (" + response.code() + ")"));
             }
 
@@ -442,9 +443,9 @@ public class SDK {
         JsonArray idArray = new JsonArray();
         createCouponRequest.getEffectiveIds().forEach(idArray::add);
 
-        if(createCouponRequest.getEffectiveOn() == CreateCouponRequest.EffectiveOn.PACKAGE) {
+        if (createCouponRequest.getEffectiveOn() == CreateCouponRequest.EffectiveOn.PACKAGE) {
             payload.add("packages", idArray);
-        } else if(createCouponRequest.getEffectiveOn() == CreateCouponRequest.EffectiveOn.CATEGORY) {
+        } else if (createCouponRequest.getEffectiveOn() == CreateCouponRequest.EffectiveOn.CATEGORY) {
             payload.add("categories", idArray);
         } else {
             throw new RuntimeException("Invalid option selected");
@@ -456,14 +457,14 @@ public class SDK {
         payload.addProperty("discount_amount", createCouponRequest.getDiscountValue());
 
         payload.addProperty("redeem_unlimited", createCouponRequest.canRedeemUnlimited());
-        payload.addProperty("expire_never", ! createCouponRequest.canExpire());
+        payload.addProperty("expire_never", !createCouponRequest.canExpire());
 
-        if(! createCouponRequest.canRedeemUnlimited()) {
+        if (!createCouponRequest.canRedeemUnlimited()) {
             payload.addProperty("expire_limit", createCouponRequest.getExpiryLimit());
         }
 
-        if(createCouponRequest.canExpire()) {
-            if(createCouponRequest.getExpiryDate() == null) {
+        if (createCouponRequest.canExpire()) {
+            if (createCouponRequest.getExpiryDate() == null) {
                 throw new RuntimeException("Coupon has expiry set to true, but no expiry date exists");
             }
             payload.addProperty("expire_date", createCouponRequest.getExpiryDate().toString());
@@ -477,12 +478,12 @@ public class SDK {
         payload.addProperty("note", createCouponRequest.getNote());
 
         return request("/coupons").withBody(GSON.toJson(payload)).withSecretKey(secretKey).sendAsync().thenApply(response -> {
-            if(response.code() == 404) {
+            if (response.code() == 404) {
                 throw new CompletionException(new ServerNotFoundException());
-            } else if(response.code() != 200) {
+            } else if (response.code() != 200) {
                 try {
                     JsonObject jsonObject = GSON.fromJson(response.body().string(), JsonObject.class);
-                    if(jsonObject.has("error_message")) {
+                    if (jsonObject.has("error_message")) {
                         throw new CompletionException(new IOException(jsonObject.get("error_message").getAsString()));
                     }
 
@@ -517,12 +518,12 @@ public class SDK {
         }
 
         return request("/listing").withSecretKey(secretKey).sendAsync().thenApply(response -> {
-            if(response.code() == 404) {
+            if (response.code() == 404) {
                 throw new CompletionException(new ServerNotFoundException());
-            } else if(response.code() != 200) {
+            } else if (response.code() != 200) {
                 try {
                     JsonObject jsonObject = GSON.fromJson(response.body().string(), JsonObject.class);
-                    if(jsonObject.has("error_message")) {
+                    if (jsonObject.has("error_message")) {
                         throw new CompletionException(new IOException(jsonObject.get("error_message").getAsString()));
                     }
 
@@ -561,9 +562,9 @@ public class SDK {
         }
 
         return request("/coupons/" + id).delete().withSecretKey(secretKey).sendAsync().thenApply(response -> {
-            if(response.code() == 404) {
+            if (response.code() == 404) {
                 throw new CompletionException(new ServerNotFoundException());
-            } else if(response.code() != 204) {
+            } else if (response.code() != 204) {
                 throw new CompletionException(new IOException("Unexpected status code (" + response.code() + ")"));
             }
 
@@ -603,9 +604,9 @@ public class SDK {
         }
 
         return request("/package/" + id).withSecretKey(secretKey).sendAsync().thenApply(response -> {
-            if(response.code() == 404) {
+            if (response.code() == 404) {
                 throw new CompletionException(new ServerNotFoundException());
-            } else if(response.code() != 200) {
+            } else if (response.code() != 200) {
                 throw new CompletionException(new IOException("Unexpected status code (" + response.code() + ")"));
             }
 
@@ -631,9 +632,9 @@ public class SDK {
         }
 
         return request("/packages").withSecretKey(secretKey).sendAsync().thenApply(response -> {
-            if(response.code() == 404) {
+            if (response.code() == 404) {
                 throw new CompletionException(new ServerNotFoundException());
-            } else if(response.code() != 200) {
+            } else if (response.code() != 200) {
                 throw new CompletionException(new IOException("Unexpected status code (" + response.code() + ")"));
             }
 
@@ -676,9 +677,9 @@ public class SDK {
         keenData.put("plugin", pluginData);
 
         return request("https://plugin.buycraft.net/analytics/startup", false).withSecretKey(secretKey).withBody(GSON.toJson(keenData)).sendAsync().thenApply(response -> {
-            if(response.code() == 404) {
+            if (response.code() == 404) {
                 throw new CompletionException(new ServerNotFoundException());
-            } else if(response.code() != 200) {
+            } else if (response.code() != 200) {
                 throw new CompletionException(new IOException("Unexpected status code (" + response.code() + ")"));
             }
 
@@ -709,7 +710,7 @@ public class SDK {
         payload.addProperty("ip", ip);
         payload.addProperty("reason", reason);
         return request("/bans").withSecretKey(secretKey).withBody(GSON.toJson(payload)).sendAsync().thenApply(response -> {
-            if(response.code() != 200) {
+            if (response.code() != 200) {
                 CompletionException e = new CompletionException(new IOException("Unexpected status code (" + response.code() + ")"));
                 platform.sendTriageEvent(e);
                 return false;
@@ -733,7 +734,7 @@ public class SDK {
         }
 
         return request("/user/" + username).withSecretKey(secretKey).sendAsync().thenApply(response -> {
-            if(response.code() != 200 && response.code() != 404) {
+            if (response.code() != 200 && response.code() != 404) {
                 CompletionException e = new CompletionException(new IOException("Unexpected status code (" + response.code() + ")"));
                 platform.sendTriageEvent(e);
                 return null;
@@ -756,6 +757,29 @@ public class SDK {
 
             } catch (IOException e) {
                 throw new CompletionException(e);
+            }
+        });
+    }
+
+    public CompletableFuture<List<Payment>> getPayments() {
+        if (getSecretKey() == null) {
+            CompletableFuture<List<Payment>> future = new CompletableFuture<>();
+            future.completeExceptionally(new ServerNotSetupException());
+            return future;
+        }
+
+        return request("/payments").withSecretKey(secretKey).sendAsync().thenApply(response -> {
+            if (response.code() == 404) {
+                throw new CompletionException(new ServerNotFoundException());
+            } else if (response.code() != 200) {
+                throw new CompletionException(new IOException("Unexpected status code (" + response.code() + ")"));
+            }
+            try {
+                JsonArray jsonObject = GSON.fromJson(response.body().string(), JsonArray.class);
+                return jsonObject.asList().stream().map(item -> Payment.fromJsonObject(item.getAsJsonObject())).collect(Collectors.toList());
+            } catch (IOException e) {
+                platform.sendTriageEvent(e);
+                throw new CompletionException(new IOException("Unexpected response"));
             }
         });
     }
@@ -791,7 +815,7 @@ public class SDK {
     /**
      * Create a new TebexRequest with the specified URL.
      *
-     * @param url The base URL to send the request to
+     * @param url        The base URL to send the request to
      * @param useBaseUrl Whether we prefix with the plugin API base
      * @return An TebexRequest instance
      */

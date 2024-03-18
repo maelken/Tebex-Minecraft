@@ -35,7 +35,7 @@ public class Package {
     private final boolean inheritCommands;
     private final boolean variableGiftcard;
 
-        public Package(int id, String name, String image, double price, int expiryLength, String expiryPeriod, String type, Category category, int globalLimit, String globalLimitPeriod, int userLimit, String userLimitPeriod, List<Server> servers, List<Integer> requiredPackages, boolean requireAny, boolean createGiftcard, boolean showUtil, String itemId, boolean disabled, boolean disableQuantity, boolean customPrice, boolean chooseServer, boolean limitExpires, boolean inheritCommands, boolean variableGiftcard) {
+    public Package(int id, String name, String image, double price, int expiryLength, String expiryPeriod, String type, Category category, int globalLimit, String globalLimitPeriod, int userLimit, String userLimitPeriod, List<Server> servers, List<Integer> requiredPackages, boolean requireAny, boolean createGiftcard, boolean showUtil, String itemId, boolean disabled, boolean disableQuantity, boolean customPrice, boolean chooseServer, boolean limitExpires, boolean inheritCommands, boolean variableGiftcard) {
         this.id = id;
         this.name = name;
         this.image = image;
